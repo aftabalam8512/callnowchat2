@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="icon" type="image/svg+xml" href="./assets/logo_fix-c62027b2.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spending Allowance</title>
+    <style>
+      .headerContainer {
+        background-color: #347a6f;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 35px;
+        max-width: 720px;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        gap: 10px;
+      }
+
+      .logo {
+        border-radius: 50%;
+        width: 50px;
+      }
+
+      .titleContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex-grow: 1;
+      }
+
+      .title {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: 12px;
+      }
+
+      .phoneIcon {
+        font-size: 24px;
+      }
+
+      .App {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+      }
+
+      @font-face {
+        font-family: Gotham;
+        src: url(./assets/GothamMedium-b5b3eb8e.ttf) format("truetype");
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: Gotham;
+        src: url(./assets/GothamBold-50792d8e.ttf) format("truetype");
+        font-weight: 700;
+      }
+
+      @font-face {
+        font-family: Gotham Book;
+        src: url(./assets/GothamBook-742359d4.ttf) format("truetype");
+        font-weight: 400;
+      }
+
+      .warning-banner {
+        background-color: #f6f6f6;
+        color: #000;
+        text-align: center;
+        max-width: 720px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .warningText {
+        color: #b22234;
+        font-size: 14px;
+        font-family: "Gotham Book";
+      }
+
+      .dateText {
+        color: #347a6f;
+        font-weight: 700;
+        font-style: italic
+      }
+
+      .normalText {
+        color: #000;
+      }
+
+      .texts {
+        margin: 10px;
+      }
+
+      @font-face {
+        font-family: Gotham;
+        src: url(/assets/GothamMedium-b5b3eb8e.ttf) format("truetype");
+        font-weight: 400;
+      }
+
+      @font-face {
+        font-family: Gotham;
+        src: url(/assets/GothamBold-50792d8e.ttf) format("truetype");
+        font-weight: 700;
+      }
+
+      @font-face {
+        font-family: Gotham Book;
+        src: url(/assets/GothamBook-742359d4.ttf) format("truetype");
+        font-weight: 400;
+      }
+
+      .chatWindow {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 720px;
+        margin: auto;
+        background-color: #f6f6f6;
+        font-family: Arial, sans-serif;
+        min-height: 400px;
+      }
+
+      .chatContainer {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 10px;
+      }
+
+      .chatHeader {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .chatHeader img {
+        border-radius: 50%;
+        width: 85px;
+        margin-right: 10px;
+      }
+
+      .chatHeader .botName,
+      .botLicense {
+        font-family: "Gotham Book";
+      }
+
+      .chatHeader .botName {
+        font-size: .9em;
+      }
+
+      .chatHeader .botLicense {
+        font-size: .6em;
+        color: #347a6f;
+      }
+
+      .chatBody {
+        flex-grow: 1;
+        margin-bottom: 15px;
+        max-height: 400px;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        font-size: 18px;
+      }
+
+      .chatBody ::-webkit-scrollbar {
+        display: none;
+      }
+
+      .messageBubble {
+        position: relative;
+        display: block;
+        border-radius: 5px;
+        background: #e5e5ea;
+        margin-bottom: 8px;
+        max-width: 80%;
+        min-height: 45px;
+        display: flex;
+        align-items: center;
+      }
+
+      .message {
+        font-size: .85em;
+        margin: 10px;
+        width: fit-content;
+        font-family: sans-serif;
+      }
+
+      .chatFooter {
+        text-align: center;
+        margin-top: 10px;
+        box-shadow: 0 -1px 3px #00000029;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        transition: transform .3s ease-out, opacity .3s ease-out;
+        transform: translateY(100%);
+        opacity: 0;
+      }
+
+      .chatFooter.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .button {
+        background-color: #347a6f;
+        border: none;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        text-decoration: none;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25em;
+        margin: auto auto 10px;
+        cursor: pointer;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        width: 60%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        font-weight: 700;
+        line-height: 0;
+        min-height: 20px;
+      }
+
+      .typingIndicator {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        width: 40px;
+        max-width: 10%;
+        justify-content: center;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .messageBubble.bot {
+        background: #e5e5ea;
+        text-align: left;
+        box-shadow: 0 1px 3px #0000004a;
+        font-family: "Gotham Book", sans-serif;
+      }
+
+      .messageBubble.user {
+        background: #347a6f;
+        text-align: right;
+        font-family: Gotham, sans-serif;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      .messageContainer.typing.visible {
+        visibility: visible;
+      }
+
+      .messageContainer.typing {
+        visibility: hidden;
+      }
+
+      .botProfilePic {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .botProfilePic2 {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+
+      .messageContainer {
+        display: flex;
+        align-items: flex-end;
+        align-items: center;
+      }
+
+      .messageContainer.user {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .profileSpacer {
+        width: 60px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .profileSpacer.visible {
+        visibility: visible;
+      }
+
+      .profileSpacer {
+        visibility: hidden;
+      }
+
+      .typingIndicator span {
+        opacity: 0;
+        animation: typingDot 1s ease infinite;
+      }
+
+      .typingIndicator span:nth-child(1) {
+        animation-delay: .05s;
+      }
+
+      .typingIndicator span:nth-child(2) {
+        animation-delay: .15s;
+      }
+
+      .typingIndicator span:nth-child(3) {
+        animation-delay: .25s;
+      }
+
+      @keyframes typingDot {
+        0% {
+          opacity: 0;
+        }
+
+        20% {
+          opacity: 0;
+        }
+
+        40% {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      :root {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100vh;
+      }
+    </style>
+
+    <script>
+      (function() {
+        const messages = [{
+            "text": "Hi There 👋"
+          },
+          {
+            "text": "I'm David. I'm going to help you get your spending allowance to pay for daily expenses."
+          },
+          {
+            "text": "Are you here to see if you qualify for the Spending Allowance? Tap Yes! 😃"
+          },
+          {
+            "type": "buttons",
+            "buttons": [{
+              "text": "Yes",
+              "messages": [{
+                  "text": "Okay, let me ask you two quick questions."
+                },
+                {
+                  "text": "Are you 64 years or older? Tap Yes or No."
+                },
+                {
+                  "type": "buttons",
+                  "buttons": [{
+                      "text": "Yes",
+                      "messages": [{
+                          "text": "Are you on Medicare parts A and B?"
+                        },
+                        {
+                          "type": "buttons",
+                          "buttons": [{
+                              "text": "Yes",
+                              "messages": [{
+                                  "text": "🎉 Congratulations! 🎁"
+                                },
+                                {
+                                  "text": "You qualify to receive a Spending Allowance™ Debit Card. It comes pre-loaded with funds that can be spent on essential needs."
+                                },
+                                {
+                                  "text": "You must call us to finalize the process. But hurry because we're currently experiencing a lot of calls from {{state}}. So please be sure to stay on the line for 2 to 3 minutes."
+                                },
+                                {
+                                  "text": "Tap the button below to call us now. It only takes a few seconds."
+                                },
+                                {
+                                  "type": "buttons",
+                                  "buttons": [{
+                                    "text": "CALL NOW",
+                                    "href": "tel:PrimaryNumber"
+                                  }]
+                                }
+                              ]
+                            },
+                            {
+                              "text": "No",
+                              "messages": [{
+                                  "text": "🎉 Congratulations! 🎁"
+                                },
+                                {
+                                  "text": "You qualify to receive a Spending Allowance™ Debit Card. It comes pre-loaded with funds that can be spent on essential needs."
+                                },
+                                {
+                                  "text": "You must call us to finalize the process. But hurry because we're currently experiencing a lot of calls from {{state}}. So please be sure to stay on the line for 2 to 3 minutes."
+                                },
+                                {
+                                  "text": "Tap the button below to call us now. It only takes a few seconds."
+                                },
+                                {
+                                  "type": "buttons",
+                                  "buttons": [{
+                                    "text": "CALL NOW",
+                                    "href": "tel:PrimaryNumber"
+                                  }]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "No",
+                      "messages": [{
+                          "text": "Are you on Medicare parts A and B?"
+                        },
+                        {
+                          "type": "buttons",
+                          "buttons": [{
+                              "text": "Yes",
+                              "messages": [{
+                                  "text": "🎉 Congratulations! 🎁"
+                                },
+                                {
+                                  "text": "You qualify to receive a Spending Allowance™ Debit Card. It comes pre-loaded with funds that can be spent on essential needs."
+                                },
+                                {
+                                  "text": "You must call us to finalize the process. But hurry because we're currently experiencing a lot of calls from {{state}}. So please be sure to stay on the line for 2 to 3 minutes."
+                                },
+                                {
+                                  "text": "Tap the button below to call us now. It only takes a few seconds."
+                                },
+                                {
+                                  "type": "buttons",
+                                  "buttons": [{
+                                    "text": "CALL NOW",
+                                    "href": "tel:PrimaryNumber"
+                                  }]
+                                }
+                              ]
+                            },
+                            {
+                              "text": "No",
+                              "messages": [{
+                                  "text": "🎉 Congratulations! 🎁"
+                                },
+                                {
+                                  "text": "You qualify to receive a Spending Allowance™ Debit Card. It comes pre-loaded with funds that can be spent on essential needs."
+                                },
+                                {
+                                  "text": "You must call us to finalize the process. But hurry because we're currently experiencing a lot of calls from {{state}}. So please be sure to stay on the line for 2 to 3 minutes."
+                                },
+                                {
+                                  "text": "Tap the button below to call us now. It only takes a few seconds."
+                                },
+                                {
+                                  "type": "buttons",
+                                  "buttons": [{
+                                    "text": "CALL NOW",
+                                    "href": "tel:PrimaryNumber"
+                                  }]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }]
+          }
+        ];
+
+        function startMessenger() {
+          let currentNode = messages;
+          let messageSequence = null;
+
+          const chatBody = document.querySelector('.chatBody');
+
+          const btnContainer = document.getElementById('cta-buttons');
+
+          async function delay(ms) {
+            return new Promise((resolve) => {
+              setTimeout(resolve, ms);
+            })
+          }
+
+          async function scrollToBottom() {
+            let items = document.querySelectorAll('.messageContainer.bot .profileSpacer');
+            if (items.length) {
+              items[items.length - 1].scrollIntoView({
+                behavior: 'smooth',
+                block: 'end'
+              });
+              await delay(250);
+            }
+          }
+
+          function createCountdown(elm) {
+            let count = parseInt(elm.getAttribute('count'));
+            let timer = setInterval(function() {
+
+            }, 100);
+          }
+
+          async function showTypingIndicator(msg) {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'messageContainer bot';
+            typingDiv.innerHTML = `
+            <div class="profileSpacer visible"><img src="./assets/profile_2-eb8f5acb.png" alt="Bot" class="botProfilePic"></div>
+            <div class="messageBubble typingIndicator"><span>•</span><span>•</span><span>•</span></div>
+          `;
+
+            chatBody.appendChild(typingDiv);
+            //
+            updateAvatars();
+            //
+            typingDiv.scrollIntoView({
+              behavior: 'smooth',
+              block: 'end'
+            });
+            //
+            await delay(msg ? Math.min(2000, Math.max(750, msg.length * 75)) : 750);
+            //
+            chatBody.removeChild(typingDiv);
+          }
+
+          async function showMsg(msg, isVisitor = false) {
+            msg = msg.replace('{{state}}', window.__state__ || 'America');
+            if (!isVisitor) {
+              await showTypingIndicator(msg);
+            }
+            //
+            if (isVisitor) {
+              chatBody.insertAdjacentHTML('beforeend', `
+              <div class="messageContainer user">
+                <div class="profileSpacer visible"></div>
+                <div class="messageBubble user">
+                  <div class="message">${msg}</div>
+                </div>
+              </div>
+            `);
+            } else {
+              chatBody.insertAdjacentHTML('beforeend', `
+              <div class="messageContainer bot">
+                <div class="profileSpacer visible">
+                  <img src="./assets/profile_2-eb8f5acb.png" alt="Bot" class="botProfilePic">
+                </div>
+
+                <div class="messageBubble bot">
+                  <div class="message">${msg}</div>
+                </div>
+              </div>
+            `);
+            }
+            //
+            updateAvatars();
+            //
+            await scrollToBottom();
+          }
+
+          async function showImg(img) {
+            await showTypingIndicator('');
+            //
+            chatBody.insertAdjacentHTML('beforeend', `
+          <div class="message message-image">
+            <p class="message-content bg-gray-200 p-3 rounded-lg shadow-xs mt-2 w-fit">
+              <img src="${images[img]}" style="max-width: 100%">
+            </p>
+          </div>
+        `);
+            //
+            await scrollToBottom();
+          }
+
+          async function showButtons(buttons) {
+    btnContainer.innerHTML = ``;
+    
+    // Check if window.ringba_known_numbers exists and has at least one entry
+    const phoneNumber = (window.ringba_known_numbers && window.ringba_known_numbers[0] && window.ringba_known_numbers[0].int)
+        ? window.ringba_known_numbers[0].int
+        : "1234567890"; // Default number or alternative logic here
+
+    for (let i in buttons) {
+        const href = buttons[i].href ? buttons[i].href : '#';
+        // Replace 'PrimaryNumber' only if phoneNumber is valid
+        btnContainer.insertAdjacentHTML('beforeend', `<a class="button" type="button" rel="${i}" href="${href.replace('tel:PrimaryNumber', 'tel:' + phoneNumber)}">${buttons[i].text}</a>`);
+    }
+    
+    btnContainer.classList.add(`show`);
+
+    // Set up click handlers for buttons
+    for (let elm of document.querySelectorAll('.button')) {
+        elm.addEventListener('click', function (e) {
+            const rel = this.getAttribute('rel');
+            const href = this.getAttribute('href');
+            if (rel !== null && href === '#') {
+                e.preventDefault();
+                btnContainer.classList.remove(`show`);
+                showMsg(buttons[rel].text, true);
+                currentNode = buttons[rel].messages;
+                startChatSequence();
+            }
+        });
+    }
+    
+    await scrollIntoViewHelper.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+    });
+    await delay(250);
+}
+
+
+          function updateAvatars() {
+            let items = document.querySelectorAll('.messageContainer.bot .profileSpacer');
+            for (let i = 0; i < items.length - 1 /* -1 = không xử lý avatar cuối cùng */ ; i++) {
+              items[i].innerHTML = '';
+            }
+          }
+
+          async function startChatSequence() {
+            btnContainer.classList.remove(`show`);
+            for (let msg of currentNode) {
+              const {
+                type,
+                text,
+                img,
+                buttons
+              } = msg
+              if (type === 'buttons') {
+                await showButtons(buttons);
+              } else if (type === 'image') {
+                await showImg(img)
+              } else {
+                await showMsg(text);
+              }
+            }
+          }
+
+          startChatSequence();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(startMessenger, 500);
+        });
+      })();
+
+
+      if (typeof ____cbfp____ === 'boolean') {
+        document.write('<style>  #main * { text-align: left !important; color: black !important; } .chatWindow { display: none !important; }</style>');
+      }
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        let daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        let currentDate = new Date();
+        let currentDayOfWeek = daysOfWeek[currentDate.getDay()];
+        let currentMonth = months[currentDate.getMonth()];
+        let currentDay = currentDate.getDate();
+        let currentYear = currentDate.getFullYear();
+        let formattedDate = currentDayOfWeek + ', ' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '/' + ('0' + currentDay).slice(-2) + '/' + currentYear;
+        let elm = document.getElementById('currentDate')
+        if (elm) {
+          elm.textContent = formattedDate;
+        }
+      })
+    </script>
+
+    <!-- <script src="https://dynamic-state.devquen.net/e95af646-c9b3-4639-ae10-c986e7294b6a?version=1"></script> -->
+
+
+
+  </head>
+
+  <body>
+
+
+    <div class="App">
+      <header class="headerContainer"><img src="./assets/logo_fix-c62027b2.png" alt="US Support Logo" class="logo">
+        <div class="titleContainer">
+          <h1 class="title">US Support</h1>
+          <p class="subtitle">Spending Allowance Program</p>
+        </div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="phoneIcon" aria-label="Phone icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z">
+          </path>
+        </svg>
+      </header>
+      <div class="warning-banner">
+        <div class="texts">
+          <div class="warningText">Warning:</div>
+          <div class="dateText">Enrollment closes on <span id="currentDate"></span> at midnight.</div>
+          <div class="normalText">Seniors In <span class="state-span">America</span> Can Now Have Their Essential Needs,
+            Energy Bills, and Other Expenses Paid Thanks to the Spending Allowance</div>
+        </div>
+      </div>
+      <div class="chatWindow">
+        <div class="chatContainer">
+          <div class="chatHeader"><img src="./assets/profile_2-eb8f5acb.png" alt="User">
+            <div>
+              <div class="botName">David Robertson</div>
+              <div class="botLicense">License ID: 4831291547614</div>
+            </div>
+          </div>
+
+
+          <div class="chatBody">
+
+
+
+
+          </div>
+
+
+          <div id="cta-buttons" class="chatFooter">
+
+          </div>
+
+          <div id="scrollIntoViewHelper"></div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+        <!--RT no-redirect-->
+    <script type="text/javascript" src="https://bonus.no-more-now.com/track.js?rtkcmpid=66d124ec326e42a078feabd4"></script>
+
+    <!--Update RT Clickid Ringba-->
+    <script>
+      function getRTCookie(name) {
+        var value = '; ' + document.cookie;
+        var parts = value.split('; ' + name + '=');
+        if (parts.length == 2) return parts.pop().split(';').shift();
+      }
+
+
+      function checkCookie() {
+        var myInterval = setInterval(() => {
+          var myRTCookie = getRTCookie('rtkclickid-store');
+          console.log("COOKIE RT- ", myRTCookie)
+          if (myRTCookie) {
+            console.log('COOKIE RECEIVED');
+            (window._rgba_tags = window._rgba_tags || []).push({
+              clickID: myRTCookie,
+            });
+            clearInterval(myInterval);
+          } else {
+            console.log('Cookie is not there');
+          }
+        }, 2000);
+      }
+
+      checkCookie()
+    </script>
+
+
+  </body>
+
+</html>
